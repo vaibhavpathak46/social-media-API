@@ -36,4 +36,10 @@ class UserResponse(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr  # Email of the user
     password: str  # Password of the user
-  
+
+class Token(BaseModel):
+    access_token: str  # Access token for authentication
+    token_type: str  # Type of the token (e.g., "bearer")
+class TokenData(BaseModel):
+    id: Optional[int] = None  # ID of the user associated with the token, optional
+    email: Optional[EmailStr] = None  # Email of the user associated with the token, optional

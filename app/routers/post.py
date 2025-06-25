@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from .. import models, schemas
 from ..database import get_db
+from .. import oauth2
 
 # Initialize the router with a prefix and tags for better organization
 router = APIRouter(
@@ -12,7 +13,8 @@ router = APIRouter(
 
 # Route to create a new post
 @router.post("/", response_model=schemas.PostResponse, status_code=status.HTTP_201_CREATED)
-def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)):
+def create_post(post: schemas.PostCreate, db: Session = Depends(get_db)
+                ,get_current_user: int = Depends(oauth2.get_current_user)):  
     """Create a new post and save it to the database."""
     new_post = models.Post(**post.dict())
     db.add(new_post)
