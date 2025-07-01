@@ -13,10 +13,18 @@ class PostBase(BaseModel):
 class PostCreate(PostBase):
     pass  # Inherits all fields from PostBase
 
+# Schema for returning a Post response with owner's email
+class PostOwner(BaseModel):
+    id: int
+    email: EmailStr
+    class Config:
+        from_attributes = True
+
 # Schema for returning a Post response
 class PostResponse(PostBase):
     id: int  # ID of the post
     created_at: datetime  # Timestamp when the post was created
+    owner: PostOwner  # Owner info (id and email)
 
     class Config:
         from_attributes = True  # Enable ORM mode for Pydantic models
